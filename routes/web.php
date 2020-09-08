@@ -20,6 +20,11 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/profile/{user}', 'ProfileController@index')->name('profile.show')->middleware('verified');
+Route::get('/profile/edit/{user}', 'ProfileController@edit')->name('profile.edit');
+Route::patch('/profile/update/{user}', 'ProfileController@update')->name('profile.update');
+
+Route::get('/users', 'UsersIndexController@index')->name('users.show');
+
 
 Route::get('/product/index', 'ProductController@index')->name('productsList.show');
 Route::get('/product/{product}', 'ProductController@product_view')->name('product.show');

@@ -68,7 +68,6 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-
                         <a href="{{ url('/profile/') }}/{{ Auth::user()->id }}">{{ Auth::user()->username }}: MY PROFILE</a>
                     @else
 
@@ -80,23 +79,24 @@
                     @endauth
                 </div>
             @endif
+        @auth
+            <div class="container">
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Lalala
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="row">
+                    <div class="col-4">
+                        <a href="{{ route('users.show') }}"><h1>Users</h1></a>
+                    </div>
+                    <div class="col-4">
+                        <h1>Products</h1>
+                    </div>
+                    <div class="col-4">
+                        <h1>Providers</h1>
+                    </div>
                 </div>
             </div>
-        </div>
+        @else
+            <h1>Register an account in order to access and manage the data.</h1>
+
+        @endauth
     </body>
 </html>
