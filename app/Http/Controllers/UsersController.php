@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 
-class UsersIndexController extends Controller{
+class UsersController extends Controller{
 
 	/**
      * Create a new controller instance.
@@ -20,7 +20,7 @@ class UsersIndexController extends Controller{
 
     public function index(){
     	$usersList = User::all();
-        return view('users', [ "usersList" => $usersList, ]);
+        return view('users.index', compact('usersList'));
     }
 }
 

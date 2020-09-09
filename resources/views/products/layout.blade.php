@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -26,7 +27,7 @@
                 <a class="navbar-brand d-flex" href="{{ url('/') }}">
                     <!-- {{ config('app.name', 'Laravel') }} -->
                     <div><img src="/png/slashMobilityLogo.png" alt="slashMobility logo" class="pr-2" style="height: 35px;"></div>
-                    <div class="pt-1">Slash Mobility Test</div>
+                    <div class="pt-1">slashMobility</div>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -57,9 +58,6 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('/profile/') }}/{{ Auth::user()->id }}">
-                                        {{ __('My Porfile') }}
-                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

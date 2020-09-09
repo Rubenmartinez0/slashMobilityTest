@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Users list</div>
+                <div class="card-header"><h3>Users list</h3></div>
                 <div class="card-body">
                     <table class="table table-hover">
                         <thead>
@@ -18,6 +18,7 @@
                             <th>Creation date</th>
                             <th>Last modification</th>
                             <th>Verification date</th>
+                            <th>Action</th>
                         </thead>
 
                         <tbody>
@@ -25,7 +26,7 @@
                             
                                 <tr>
                                     <td>{{$user->id}}</td>
-                                    <td><a href="{{ url('/profile/') }}/{{$user->id}}"><strong>{{$user->username}}</strong></a></td>
+                                    <td>{{$user->username}}</a></td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->lastname}}</td>
@@ -34,6 +35,7 @@
                                     <td>{{$user->email_verified_at}}</td>
 
                                     <td>
+                                        <a class="btn btn-primary" href="{{ url('/profile/') }}/{{$user->id}}">View profile</a>
                                     </td>
                                 </tr>
                             
