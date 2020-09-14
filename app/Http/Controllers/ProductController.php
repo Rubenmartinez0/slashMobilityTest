@@ -39,7 +39,11 @@ class ProductController extends Controller
                         ->where('id', '!=', $product->id)
                         ->get();
 
-        return view('products.show',compact('product', 'similarProducts'));
+        $providerName = Provider::select('name')
+            ->where('id', '=', $product->provider_id)
+            ->get();
+                            
+        return view('products.show',compact('product', 'similarProducts', 'providerName'));
     }
   
     /**
@@ -56,19 +60,22 @@ class ProductController extends Controller
             'type' => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string', 'max:2000'],
             'image' => ['nullable', 'image'],
-            
-            /*
-            'provider_name' => ['required', 'string', 'max:255'],
             'provider_id' => ['required', 'string'],
-            */
         
         ]);
+
+        //dd($data);
         //\App\Product::create($data);
         //auth()->provider()->products()->create($data);
-        Product::create($data);
+        
+        if(auth()->user()){
+            Product::create($data);
+        }
+        
 
         $products = Product::all();
         return view('products/index', compact('products'));
+        
     }
 
     /**
@@ -79,7 +86,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $providersList = Provider::select('id', 'name')
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+        return view('products.edit', compact('product', 'providersList'));
     }
   
     /**

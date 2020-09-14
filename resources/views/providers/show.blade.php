@@ -63,14 +63,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="user_id" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Created By') }}</strong></label>
-                        <div class="col-md-6">
-                               <label for="user_id" class="col-md-8 col-form-label text-md-right">{{ $provider->user_id }}</label>
-                            
-                        </div>
-                    </div>
-
+                    
                     <div class="form-group row">
                         <label for="created_at" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Creation date') }}</strong></label>
                         <div class="col-md-6">
@@ -111,22 +104,20 @@
                         <thead>
                             <th>Name</th>
                             <th>Type</th>
-                            <th>Description</th>
                             <th>Action</th>
                         </thead>
 
                         <tbody>
-                        <!--  -->
+                        @foreach ($providerProductsList as $product)
                             <tr>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->type }}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="{{ route('provider.show',$provider->id) }}">View product</a>
+                                    <a class="btn btn-primary" href="{{ route('product.show',$product->id) }}">View product</a>
                                 </td>
                             </tr>
                             
-                        <!-- -->
+                        @endforeach
                         </tbody>
                 </div>
             </div>

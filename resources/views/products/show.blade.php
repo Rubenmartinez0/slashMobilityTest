@@ -33,7 +33,21 @@
                         <div class="col-md-6">
                             <label for="type" class="col-md-8 col-form-label text-md-right">{{ $product->type }}</label>
                         </div>
-                    </div>   
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="provider_name" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Provider') }}</strong></label>
+                        <div class="col-md-6">
+
+                            @if($providerName[0])
+                                
+                                    <a for="provider_name" href="{{ route('provider.show',$product->provider_id) }}" class="btn btn-primary col-md-8 col-form-label text-md-right">{{ $providerName[0]->name }}</a>
+                                
+                            @else
+                                <label for="provider_name" class="col-md-8 col-form-label text-md-right" style="opacity: .5;">Unable to get the provider of this product.</label>
+                            @endif
+                        </div>
+                    </div>
 
                     <div class="form-group row">
                         <label for="description" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Description') }}</strong></label>
@@ -47,16 +61,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="provider_name" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Provider_name') }}</strong></label>
-                        <div class="col-md-6">
-                            @if($product->provider_name)
-                               <label for="provider_name" class="col-md-8 col-form-label text-md-right">{{ $product->provider_name }}</label>
-                            @else
-                                <label for="provider_name" class="col-md-8 col-form-label text-md-right" style="opacity: .5;">Unable to get the provider of this product.</label>
-                            @endif
-                        </div>
-                    </div>
+                    
 
 
                     <div class="form-group row">

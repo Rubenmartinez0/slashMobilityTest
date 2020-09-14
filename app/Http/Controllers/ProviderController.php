@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Provider;
+use App\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,10 @@ class ProviderController extends Controller
         ]);
 
         //\App\Provider::create($data);
-        auth()->user()->providers()->create($data);
+        if(auth()->user()){
+            \App\Provider::create($data);
+        }
+        //->providers()->create($data);
 
         $providers = Provider::all();
         return view('providers/index', [ "providers" => $providers, ]);
@@ -62,7 +66,14 @@ class ProviderController extends Controller
      */
     public function show(Provider $provider)
     {
-        return view('providers.show',compact('provider'));
+        $providerProductsList = Product::select('*')
+            ->where('provider_id', '=', $provider->id)
+            ->get();
+
+
+        return view('providers.show',compact('provider', 'providerProductsList'));
+
+
     }
    
     /**

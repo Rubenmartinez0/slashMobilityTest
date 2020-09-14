@@ -19,8 +19,9 @@
                             <th>Id</th>
                             <th>Name</th>
                             <th>Type</th>
+                            <th>Provider</th>
                             <th>Description</th>
-                            <th>Provider_name</th>
+                            
                             <th>Actions</th>
                         </thead>
 
@@ -28,10 +29,16 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->id }}</td>
-                                <td>{{ $product->name }}</td>
+                                <td><a href="{{ route('product.show',$product->id) }}">{{ $product->name }}</a></td>
                                 <td>{{ $product->type }}</td>
+                                <?php
+                                    $providerName = App\Provider::select('name')
+                                        ->where('id', '=', $product->provider_id)
+                                        ->get();
+                                ?>
+                                <td><a href="{{ route('provider.show',$product->provider_id) }}">{{$providerName[0]->name }}</a></td>
                                 <td>{{ $product->description }}</td>
-                                <td><a class="btn btn-primary" href="#"> $product->provider_name </a></td>
+                                
                                 <td>   
                                     <a class="btn btn-primary" href="{{ route('product.show',$product->id) }}">Show</a>
                                     <a class="btn btn-warning" href="{{ route('product.edit',$product->id) }}">Edit</a>
