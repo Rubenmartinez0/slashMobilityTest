@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Provider;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -54,7 +55,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        
+        
         $data = request()->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:100'],
@@ -64,18 +66,45 @@ class ProductController extends Controller
         
         ]);
 
+        $imagePath = null;
+        if(request('image')){
+            $imagePath = request('image')->store('images', 'public');
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000,1000);
+            $image->save();
+        }
+        
+
         //dd($data);
         //\App\Product::create($data);
         //auth()->provider()->products()->create($data);
         
         if(auth()->user()){
-            Product::create($data);
+
+            if(request('image')){
+                Product::create([
+                    'name' => $data['name'],
+                    'type' => $data['type'],
+                    'description' => $data['description'],
+                    'image' => $imagePath,
+                    'provider_id' => $data['provider_id'],
+
+                ]);
+            }else{
+                Product::create($data);
+            }
+
+
+            //BEST ALTERNATIVE TO THE IF ELSE ABOVE:
+            /* $product->update(array_merge(
+                $data,
+                ['image' => $imagePath]
+            ));
+            */
         }
         
 
         $products = Product::all();
-        return view('products/index', compact('products'));
-        
+        return view('products/index', compact('products'));  
     }
 
     /**
@@ -103,20 +132,46 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+
         $data = request()->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string', 'max:2000'],
             'image' => ['nullable', 'image'],
+            'provider_id' => ['required', 'integer'],
+            
         ]);
+
+        if(request('image')){
+            $imagePath = request('image')->store('images', 'public');
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(1000,1000);
+            $image->save();
+            $imageArray = ['image' => $imagePath];
+        }
+        
         
         if(auth()->user()){
-            $product->update($data);
+            //if $imageArray is null we will pass an empty array.
+            $product->update(array_merge(
+                $data,
+                $imageArray ?? []
+            ));
+  
             return redirect()->route('products.index')->with('success','Product updated successfully.');
         }
         
 
         return redirect()->route('products.index')->with('failure','Product failed to update.');
+               
+    }
+
+    public function deleteImage(Product $product){
+        if(auth()->user()){
+            //if $imageArray is null we will pass an empty array.
+           $product->image = null;
+           $product->update();
+            return redirect()->route('product.edit', $product);
+        }
     }
 
     /**

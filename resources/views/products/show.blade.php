@@ -22,6 +22,17 @@
                     </div>
 
                     <div class="form-group row">
+                        <label for="image" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Image') }}</strong></label>
+                        <div class="col-md-6">
+                            @if($product->image)
+                                <img for="image" class="col-md-8 col-form-label text-md-right" src="/storage/{{ $product->image }}">
+                            @else
+                                <label for="image" class="col-md-8 col-form-label text-md-right" style="opacity: .5;">No image provided.</label>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Name') }}</strong></label>
                         <div class="col-md-6">
                             <label for="name" class="col-md-8 col-form-label text-md-right">{{ $product->name }}</label>

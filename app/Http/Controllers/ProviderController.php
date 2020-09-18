@@ -42,9 +42,9 @@ class ProviderController extends Controller
     {
 
         $data = request()->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'max:255', 'unique:providers'],
             'address' => ['nullable', 'string', 'max:255'],
-            'telephone' => ['nullable', 'string', 'max:12', 'unique:users'],
+            'telephone' => ['nullable', 'numeric', 'digits_between:9,15', 'unique:providers'],
             'city' => ['nullable', 'string', 'max:255'],
         ]);
 

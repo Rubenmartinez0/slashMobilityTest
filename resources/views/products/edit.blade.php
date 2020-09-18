@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="/product/{{$product->id}}">
+                    <form method="POST" action="/product/{{$product->id}}" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="form-group row">
@@ -30,6 +30,25 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="image" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Image') }}</strong></label>
+
+                            <div class="col-md-5">
+                                @if($product->image)
+                                    <img for="image" class="col-md-8 col-form-label text-md-right" src="/storage/{{ $product->image }}">
+                                    <a href="{{ route('product.deleteImage', $product) }}" id="deleteProductImageButton" class="btn btn-danger mb-2"><strong>X</strong></a>
+                                @endif
+                                <input type="file" class="form-control-file" id="image" name="image" value="que lo que">
+                                @error('image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+
                         </div>
 
 
@@ -65,12 +84,12 @@
                             <label for="provider_id" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Provider Id') }}</strong></label>
                             <div class="col-md-5">
                                 
-                                <select class="form-control @error('type') is-invalid @enderror">
+                                <select id="provider_id" type="id"  class="form-control @error('provider_id') is-invalid @enderror" name="provider_id">
                                     @foreach($providersList as $provider)
                                         @if($provider->id == $product->provider_id)
-                                            <option selected="true">{{ $product->provider_id }}</option>
+                                            <option selected="true" >{{ $product->provider_id }}</option>
                                         @else
-                                            <option>{{ $provider->id }}</option>
+                                            <option name="provider_id">{{ $provider->id }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -88,7 +107,8 @@
                             <div class="col-md-5">
                                 @foreach($providersList as $provider)
                                         @if($provider->id == $product->provider_id)
-                                            <input disabled id="provider_name" type="provider_name" class="form-control @error('provider_name') is-invalprovider_name @enderror" name="provider_name" value="{{ old('provider_name') ?? $provider->name}}" autocomplete="provider_name">
+                                            
+                                            <provider-input-name provider-name="{{ $provider->name }}"></provider-input-name>
                                         @endif
                                 @endforeach
                                 @error('provider_name')
@@ -101,7 +121,7 @@
 
                         
 
-
+                        
 
                         <div class="form-group row">
                             <label for="description" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Description') }}</strong></label>

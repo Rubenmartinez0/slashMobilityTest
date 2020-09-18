@@ -21,7 +21,7 @@
                         </div>
                     </div>
 
-
+                    
                     <div class="form-group row">
                         <label for="name" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Name') }}</strong></label>
                         <div class="col-md-6">
@@ -63,6 +63,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Total products') }}</strong></label>
+                        <div class="col-md-6">
+                            <label for="name" class="col-md-8 col-form-label text-md-right">{{ $provider->products->count() }}</label>
+                        </div>
+                    </div>
+
                     
                     <div class="form-group row">
                         <label for="created_at" class="col-md-4 col-form-label text-md-right"><strong>{{ __('Creation date') }}</strong></label>
@@ -94,33 +101,45 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header d-flex">
-                    <label class="mr-auto"><h3><strong>{{ $provider->name }}'s products</strong></h3></label>
-                </div>
 
-                <div class="card-body">
-                    <table class="table table-hover">
-                        <thead>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Action</th>
-                        </thead>
 
-                        <tbody>
-                        @foreach ($providerProductsList as $product)
-                            <tr>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->type }}</td>
-                                <td>
-                                    <a class="btn btn-primary" href="{{ route('product.show',$product->id) }}">View product</a>
-                                </td>
-                            </tr>
-                            
-                        @endforeach
-                        </tbody>
+            @if($provider->products->count() > 0)
+                <div class="card">
+                    <div class="card-header d-flex">
+                        <label class="mr-auto"><h3><strong>{{ $provider->name }}'s products</strong></h3></label>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Action</th>
+                            </thead>
+
+                            <tbody>
+                            @foreach ($providerProductsList as $product)
+                                <tr>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->type }}</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="{{ route('product.show',$product->id) }}">View product</a>
+                                    </td>
+                                </tr>
+                                
+                            @endforeach
+                            </tbody>
+                    </div>
                 </div>
-            </div>
+            @else
+                <h1></h1>
+
+                <div class="card">
+                    <div class="card-header d-flex">
+                        <label class="center"><h3><strong>{{ $provider->name }} has no published products.</strong></h3></label>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </div>

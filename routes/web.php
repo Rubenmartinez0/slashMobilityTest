@@ -44,7 +44,7 @@ Route::get('/product/{product}', 'ProductController@show')->name('product.show')
 
 Route::get('/product/{product}/edit', 'ProductController@edit')->name('product.edit');
 Route::patch('/product/{product}', 'ProductController@update')->name('product.update');
-
+Route::get('/product/deleteImage/{product}', 'ProductController@deleteImage')->name('product.deleteImage');
 
 
 
